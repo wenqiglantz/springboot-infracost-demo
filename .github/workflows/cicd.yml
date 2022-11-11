@@ -1,0 +1,54 @@
+name: CI/CD workflow to build and upload jar to S3
+
+on:
+  workflow_dispatch:
+    inputs:
+      # pass in environment through manual trigger, if not passed in, default to 'dev'
+      environment:
+        description: 'Environment to run the workflow against'
+        type: environment
+        required: true
+
+jobs:
+
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    environment: ${{ inputs.env || 'dev' }}
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@248ae51c2e8cc9622ecf50685c8bf7150c6e8813
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
+      - name: Checkout Code
+        uses: actions/checkout@d0651293c4a5a52e711f25b41b05b2212f385d28
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@05b148adc31e091bafbaf404f745055d4d3bc9d2
+        with:
+          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup jdk
+        uses: actions/setup-java@2506d21b7426d2b544f65d027f277ead4c5f6a9f
+        with:
+          java-version: 11
+          distribution: 'adopt'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean install -Dmaven.test.skip --file pom.xml
+
+      - name: Upload jar to S3
+        run: |
+          if ! aws s3 ls s3://${{ secrets.S3_BUCKET_NAME }} &> /dev/null ; then
+            aws s3api create-bucket --bucket ${{ secrets.S3_BUCKET_NAME }} --region ${{ secrets.AWS_REGION }}
+          fi
+          aws s3 cp target/demo-0.0.1-SNAPSHOT-aws.jar s3://${{ secrets.S3_BUCKET_NAME }}

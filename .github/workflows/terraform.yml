@@ -1,0 +1,43 @@
+name: "Infracost analysis and Terraform deployment"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run the workflow against'
+        type: environment
+        required: true
+  push:
+    branches: [ main ]
+    paths: 'terraform/**'
+  pull_request:
+    branches: [ main ]
+    paths: 'terraform/**'
+
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
+jobs:
+
+  infracost:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: wenqiglantz/reusable-workflows-modules/.github/workflows/terraform-infracost.yml@main
+    with:
+      # need to specify working-directory as that's where the terraform files live in the source code
+      working-directory: ./terraform
+      terraform-var-file: ./.env/${{ inputs.env || 'dev' }}/terraform.tfvars
+      usage-file: ./.env/${{ inputs.env || 'dev' }}/infracost-usage.yml
+    secrets: inherit
+
+  terraform:
+    needs: infracost
+    permissions:
+      id-token: write  # need this for OIDC
+      contents: read   # This is required for actions/checkout
+    uses: wenqiglantz/reusable-workflows-modules/.github/workflows/terraform.yml@main
+    with:
+      # need to specify working-directory as that's where the terraform files live in the source code
+      working-directory: ./terraform
+    secrets: inherit

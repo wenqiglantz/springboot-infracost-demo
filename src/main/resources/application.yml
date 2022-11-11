@@ -1,0 +1,13 @@
+# Need lines below (line 2-13) to trigger spring-cloud function to run the CustomRuntimeEventLoop
+# to set custom runtime for AWS Lambda as it doesn't support Java 17 yet.
+spring:
+  main:
+    banner-mode: off
+    web-application-type: none #change to 'servlet' for development, 'none' for deployment
+  cloud:
+    function:
+#      preferred-json-mapper: jackson
+      web:
+        export:
+          debug: true
+debug: true
