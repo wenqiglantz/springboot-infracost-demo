@@ -1,7 +1,7 @@
 # Terraform
 
 ## Usage
-
+ 
 *You'll need to install Terraform CLI if you haven't already done so. The instructions can be found
 here: https://learn.hashicorp.com/tutorials/terraform/install-cli.*
 
