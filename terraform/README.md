@@ -52,14 +52,18 @@ from the **terraform.tfvars** file.
 ### infracost
 
 Runs Infracost break down of the cost based on terraform code
+
 `infracost breakdown --path . --show-skipped --terraform-var-file='./.env/dev/terraform.tfvars' --no-color > cost-without-usage.txt`
 
 Runs Infracost break down of the cost based on terraform code and projected usage
+
 `infracost breakdown --path . --usage-file infracost-usage.yml --terraform-var-file='./.env/dev/terraform.tfvars' --no-color > cost-with-usage.txt`
 
 Generate json output file first
+
 `infracost breakdown --path . --usage-file infracost-usage.yml  --terraform-var-file='./.env/dev/terraform.tfvars' --format json --out-file infracost-with-usage.json --show-skipped`
 
 Then render the json into html
+
 `infracost output --path infracost-with-usage.json --format html --out-file report.html`
 
