@@ -14,7 +14,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: wenqiglantz/reusable-workflows-modules/.github/workflows/infracost-pr.yml@main
+    uses: wenqiglantz/reusable-workflows-modules/.github/workflows/terraform-infracost-pr.yml@main
     with:
       terraform-var-file: ./.env/${{ inputs.env || 'dev' }}/terraform.tfvars
       usage-file: ./.env/${{ inputs.env || 'dev' }}/infracost-usage.yml
