@@ -1,5 +1,5 @@
 aws_region     = "us-east-1"
-s3_bucket_name = "springboot-infracost-demo-dev-bucket"
+s3_bucket_name = "springboot-infracost-demo-bucket"
 s3_object_key  = "demo-0.0.1-SNAPSHOT-aws.jar"
 
 lambda_functions = {
