@@ -15,7 +15,7 @@ terraform plan -input=false -var-file='./.env/dev/terraform.tfvars' -no-color
 terraform apply -input=false -var-file='./.env/dev/terraform.tfvars' --auto-approve
 terraform destroy -input=false -var-file='./.env/dev/terraform.tfvars' --auto-approve
 ```
-
+ 
 ### `terraform get`
 
 *The `terraform get` command is used to download and update modules mentioned in the root
