@@ -1,7 +1,7 @@
 # Terraform
 
 ## Usage
-
+ 
 GitHub Actions workflows have been created under .github/workflows directory to kick off various workflows including terraform workflow.  In addition, we can run terraform CLI as listed below to run terraform init/plan/apply etc.
  
 *You'll need to install Terraform CLI if you haven't already done so. The instructions can be found
