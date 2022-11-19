@@ -1,11 +1,13 @@
 # Terraform
 
 ## Usage
-
+ 
+GitHub Actions workflows have been created under .github/workflows directory to kick off various workflows including terraform workflow.  In addition, we can run terraform CLI as listed below to run terraform init/plan/apply etc.
+ 
 *You'll need to install Terraform CLI if you haven't already done so. The instructions can be found
 here: https://learn.hashicorp.com/tutorials/terraform/install-cli.*
 
-Make sure you've updated **terraform.tfvars** to indicate your aws profile and region before creating.
+Make sure you've updated **terraform.tfvars** to indicate your aws region before creating.
 
 ```bash
 terraform fmt
@@ -15,6 +17,9 @@ terraform plan -input=false -var-file='./.env/dev/terraform.tfvars' -no-color
 terraform apply -input=false -var-file='./.env/dev/terraform.tfvars' --auto-approve
 terraform destroy -input=false -var-file='./.env/dev/terraform.tfvars' --auto-approve
 ```
+ 
+### `terraform fmt`
+*The `terraform fmt` command formats the terraform tf files.
 
 ### `terraform get`
 
@@ -52,14 +57,18 @@ from the **terraform.tfvars** file.
 ### infracost
 
 Runs Infracost break down of the cost based on terraform code
-`infracost breakdown --path . --show-skipped --terraform-var-file='./.env/dev/terraform.tfvars' --no-color > cost-without-usage.txt`
+
+`infracost breakdown --path . --show-skipped --terraform-var-file='./.env/dev/terraform.tfvars' --no-color`
 
 Runs Infracost break down of the cost based on terraform code and projected usage
-`infracost breakdown --path . --usage-file infracost-usage.yml --terraform-var-file='./.env/dev/terraform.tfvars' --no-color > cost-with-usage.txt`
+
+`infracost breakdown --path . --usage-file infracost-usage.yml --terraform-var-file='./.env/dev/terraform.tfvars' --no-color`
 
 Generate json output file first
+
 `infracost breakdown --path . --usage-file infracost-usage.yml  --terraform-var-file='./.env/dev/terraform.tfvars' --format json --out-file infracost-with-usage.json --show-skipped`
 
 Then render the json into html
+
 `infracost output --path infracost-with-usage.json --format html --out-file report.html`
 

@@ -8,6 +8,6 @@ lambda_functions = {
     handler                = "org.springframework.cloud.function.adapter.aws.FunctionInvoker"
     function_name_variable = "demo"
     ephemeral_storage      = 512
-    memory_size            = 512
+    memory_size            = 1024
   }
 }
