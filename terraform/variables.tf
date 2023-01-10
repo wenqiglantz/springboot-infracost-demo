@@ -16,12 +16,6 @@ variable "s3_object_key" {
   default     = ""
 }
 
-variable "output_zip" {
-  type        = string
-  description = "The zip output"
-  default     = ""
-}
-
 variable "lambda_functions" {
   type        = any
   description = "Lambda functions"
