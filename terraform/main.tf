@@ -18,7 +18,7 @@ provider "aws" {
 # Lambda module
 #######################################
 module "lambda" {
-  source           = "github.com/wenqiglantz/reusable-workflows-modules/terraform/modules/lambda"
+  source           = "github.com/wenqiglantz/reusable-workflows-modules//terraform/modules/lambda?ref=main"
   s3_bucket_name   = var.s3_bucket_name
   s3_object_key    = var.s3_object_key
   lambda_functions = var.lambda_functions
